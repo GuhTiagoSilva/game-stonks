@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:gamestonksdb
-    username: ${USER:root}
-    password: ${PASSWORD:1234567}
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
   h2:
     console:
       enabled: true

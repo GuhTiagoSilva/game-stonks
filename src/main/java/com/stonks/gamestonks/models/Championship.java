@@ -6,21 +6,24 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "tb_role")
-public class Role implements Serializable {
+@Table(name = "tb_championship")
+public class Championship implements Serializable {
     private static final Long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String role;
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users = new HashSet<>();
+    private String title;
+    private Instant startDate;
+    private Instant finalDate;
+    @ManyToMany(mappedBy = "championships")
+    private List<Player> users = new ArrayList<>();
 }

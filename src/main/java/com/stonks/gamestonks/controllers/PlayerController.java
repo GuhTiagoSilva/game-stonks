@@ -1,23 +1,25 @@
 package com.stonks.gamestonks.controllers;
 
-import com.stonks.gamestonks.models.Player;
+import com.stonks.gamestonks.dto.PlayerDto;
 import com.stonks.gamestonks.services.PlayerService;
-import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/players")
-@AllArgsConstructor
+@RequestMapping("/players")
 public class PlayerController {
 
     private final PlayerService playerService;
 
-    @GetMapping("/{id}")
-    public Player findById(@PathVariable Long id) {
-        return playerService.findById(id);
+    public PlayerController(PlayerService playerService) {
+        this.playerService = playerService;
+    }
+
+    @PostMapping
+    public void createPlayer(@RequestBody PlayerDto playerDto) {
+        playerService.createPlayer(playerDto);
     }
 
 }

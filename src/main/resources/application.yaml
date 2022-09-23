@@ -1,5 +1,11 @@
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   profiles:
-    active: test
+    active: dev
   jpa:
     open-in-view: false
+server:
+  servlet:
+    context-path: /api/v1

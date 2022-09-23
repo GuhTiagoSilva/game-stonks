@@ -2,6 +2,7 @@ package com.stonks.gamestonks.controllers;
 
 import com.stonks.gamestonks.dto.PlayerDto;
 import com.stonks.gamestonks.services.PlayerService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ public class PlayerController {
         this.playerService = playerService;
     }
 
+    @ApiOperation(value = "Criar jogador")
     @PostMapping
     public void createPlayer(@RequestBody PlayerDto playerDto) {
         playerService.createPlayer(playerDto);

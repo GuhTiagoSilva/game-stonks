@@ -29,6 +29,11 @@ public class PlayerModel extends UserModel implements Serializable {
     @ManyToOne
     @JoinColumn(name = "vacancy_id")
     private VacancyModel vacancy;
+
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private TeamModel team;
+
     public PlayerModel(Long playerId) {
         this.setId(playerId);
     }

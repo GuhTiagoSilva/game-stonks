@@ -3,12 +3,12 @@ package com.stonks.gamestonks.controllers;
 import com.stonks.gamestonks.dto.VacancyDto;
 import com.stonks.gamestonks.services.VacancyService;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/vacancies")
+@CrossOrigin(origins = "*")
 public class VacancyController {
 
     private final VacancyService vacancyService;

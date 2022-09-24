@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -33,6 +34,9 @@ public class TeamModel implements Serializable {
     @ManyToOne
     @JoinColumn(name = "vacancy_id")
     private VacancyModel vacancy;
+
+    @OneToMany(mappedBy = "team")
+    private List<PlayerModel> players = new ArrayList<>();
 
     public TeamModel(Long teamId) {
         id = teamId;

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/games")
+@CrossOrigin(origins = "*")
 public class GameController {
 
     private final GameService gameService;

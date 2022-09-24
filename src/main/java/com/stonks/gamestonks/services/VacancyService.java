@@ -17,6 +17,7 @@ public class VacancyService {
 
     @Transactional
     public void createVacancy(VacancyDto vacancyDto) {
+        // Buscar usuario logado e setar na vaga
         VacancyModel model = new VacancyModel();
         model.setDescription(vacancyDto.getDescription());
         model.setEndDate(vacancyDto.getEndDate());

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/players")
+@CrossOrigin(origins = "*")
 public class PlayerTeamVacancyController {
 
     private final PlayerTeamVacancyService playerTeamVacancyService;

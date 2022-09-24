@@ -31,6 +31,9 @@ public class VacancyModel implements Serializable {
     private VacancyStatus vacancyStatus;
     private LocalDate startDate;
     private LocalDate endDate;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserModel author;
 
     public VacancyModel(Long vacancyId) {
         id = vacancyId;

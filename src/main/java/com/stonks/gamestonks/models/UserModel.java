@@ -3,6 +3,7 @@ package com.stonks.gamestonks.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,7 +14,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "TB_USERS")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class UserModel implements Serializable {
+public abstract class UserModel implements Serializable, UserDetails {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -26,4 +27,7 @@ public abstract class UserModel implements Serializable {
     private String password;
     @Column(unique = true)
     private String cpf;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private RoleModel role;
 }

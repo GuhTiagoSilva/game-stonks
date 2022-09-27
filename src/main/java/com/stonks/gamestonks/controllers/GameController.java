@@ -4,6 +4,7 @@ import com.stonks.gamestonks.dto.GameDto;
 import com.stonks.gamestonks.services.GameService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,8 +18,10 @@ public class GameController {
         this.gameService = gameService;
     }
 
+
     @ApiOperation(value = "Criar um jogo")
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAnyRole('TEAM', 'PLAYER')")
     @PostMapping
     public void createGame(@RequestBody GameDto gameDto) {
         gameService.createGame(gameDto);

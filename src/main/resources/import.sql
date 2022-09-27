@@ -25,11 +25,17 @@ insert into tb_games (name) values('shogi');
 insert into tb_games (name) values('snooker');
 insert into tb_games (name) values('Turkish checkers');
 
-insert into tb_users (first_name, last_name, email, password, cpf) values ('Gustavo', 'Silva', 'gustavo.filho.gts@gmail.com', '12345678', '523.132.298-62');
+insert into TB_ROLES(authority) values ('ROLE_PLAYER');
+insert into TB_ROLES(authority) values ('ROLE_TEAM');
+
+insert into tb_users (role_id, first_name, last_name, email, password, cpf) values (1, 'Gustavo', 'Silva', 'gustavo.filho.gts@gmail.com', '$2a$12$PWugiEfMzTk71bKDL6AdXOaEEXNSrfiP6FdODa6G.NX75Khgyu7Ue', '523.132.298-62');
 insert into tb_players (level, years_of_experience, id) values (1, 5, 1);
 
-insert into tb_users (first_name, last_name, email, password, cpf) values ('Gustavo', 'Silva', 'gustavo.tiago.gts@gmail.com', '12345678', '623.132.298-62');
+insert into tb_users (role_id, first_name, last_name, email, password, cpf) values (2, 'Gustavo', 'Silva', 'gustavo.tiago.gts@gmail.com', '$2a$12$PWugiEfMzTk71bKDL6AdXOaEEXNSrfiP6FdODa6G.NX75Khgyu7Ue', '623.132.298-62');
 insert into tb_players (level, years_of_experience, id) values (2, 5, 2);
+
+insert into tb_users (role_id, first_name, last_name, email, password, cpf) values (1, 'Mateus', 'Zucheli', 'mateuszucheli@hotmail.com', '$2a$12$PWugiEfMzTk71bKDL6AdXOaEEXNSrfiP6FdODa6G.NX75Khgyu7Ue', '723.132.298-62');
+insert into tb_players (level, years_of_experience, id) values (1, 5, 3);
 
 insert into tb_vacancies (user_id, name, description, vacancy_type, start_date, end_date) values (1, 'Vaga 1', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'TEAM', '2022-09-23', '2022-10-23');
 insert into tb_vacancies (user_id, name, description, vacancy_type, start_date, end_date) values (1, 'Vaga 2', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'TEAM', '2022-05-22', '2022-06-23');

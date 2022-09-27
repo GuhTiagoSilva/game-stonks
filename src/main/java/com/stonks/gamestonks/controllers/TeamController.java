@@ -6,6 +6,7 @@ import com.stonks.gamestonks.repositories.projections.TeamProjection;
 import com.stonks.gamestonks.services.TeamService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -23,6 +24,7 @@ public class TeamController {
     }
 
     @ApiOperation(value = "Criar time")
+    @PreAuthorize("hasAnyRole('TEAM')")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public void createTeam(@RequestBody TeamDto teamDto) {
@@ -31,6 +33,7 @@ public class TeamController {
 
     @ApiOperation(value = "Obter todos os times que possuem vagas abertas")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAnyRole('PLAYER')")
     @GetMapping("/vacancies")
     public List<TeamProjection> findOpenVacanciesForTeams(@RequestParam(required = false) String gameName, @RequestParam(required = false) Long yearsOfExperience, @RequestParam(required = false) LocalDate startDate) {
         return teamService.findAllTeamsWithAvailableVacancies(gameName, yearsOfExperience, startDate);
@@ -38,6 +41,7 @@ public class TeamController {
 
     @ApiOperation(value = "Obter todos os times e os games que jogam")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAnyRole('TEAM', 'PLAYER')")
     @GetMapping
     public List<TeamGameProjection> findAllTeams(@RequestParam(required = false) String gameName, @RequestParam(required = false) Long yearsOfExperience) {
         return teamService.findAllTeams(gameName, yearsOfExperience);
@@ -45,6 +49,7 @@ public class TeamController {
 
     @ApiOperation(value = "Obter time por ID")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAnyRole('TEAM', 'PLAYER')")
     @GetMapping("/{id}")
     public TeamDto findById(@PathVariable Long id) {
         return teamService.findById(id);

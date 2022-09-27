@@ -4,6 +4,7 @@ import com.stonks.gamestonks.dto.PlayerDto;
 import com.stonks.gamestonks.services.PlayerService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,6 +20,7 @@ public class PlayerController {
 
     @ApiOperation(value = "Criar jogador")
     @PostMapping
+    @PreAuthorize("hasAnyRole('TEAM', 'PLAYER')")
     @ResponseStatus(HttpStatus.CREATED)
     public void createPlayer(@RequestBody PlayerDto playerDto) {
         playerService.createPlayer(playerDto);
@@ -26,6 +28,7 @@ public class PlayerController {
 
     @ApiOperation(value = "Encontrar jogador por ID")
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('TEAM', 'PLAYER')")
     @ResponseStatus(HttpStatus.OK)
     public PlayerDto findById(@PathVariable Long id) {
         return playerService.findById(id);

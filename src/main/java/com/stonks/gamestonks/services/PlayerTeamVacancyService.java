@@ -1,7 +1,6 @@
 package com.stonks.gamestonks.services;
 
 import com.stonks.gamestonks.dto.EmailDetailsDto;
-import com.stonks.gamestonks.dto.PlayerTeamVacancyDto;
 import com.stonks.gamestonks.enums.ContractType;
 import com.stonks.gamestonks.enums.VacancyStatus;
 import com.stonks.gamestonks.models.PlayerModel;
@@ -294,24 +293,30 @@ public class PlayerTeamVacancyService {
             "</body>\n" +
             "</html>";
 
+    private final AuthService authService;
+
     public PlayerTeamVacancyService(PlayerTeamVacancyRepository playerTeamVacancyRepository,
                                     TeamRepository teamRepository,
                                     PlayerRepository playerRepository,
                                     VacancyRepository vacancyRepository,
-                                    EmailService emailService
+                                    EmailService emailService,
+                                    AuthService authService
     ) {
         this.playerTeamVacancyRepository = playerTeamVacancyRepository;
         this.teamRepository = teamRepository;
         this.playerRepository = playerRepository;
         this.vacancyRepository = vacancyRepository;
         this.emailService = emailService;
+        this.authService = authService;
     }
 
     @Transactional
-    public void applyToVacancy(Long playerId, Long vacancyId, Long teamId) {
+    public void applyToVacancy(Long vacancyId, Long teamId) {
+
+
 
         VacancyModel vacancyModel = vacancyRepository.findById(vacancyId).orElseThrow(() -> new ResourceNotFoundException("Vacancy Not Found"));
-        PlayerModel playerModel = playerRepository.findById(playerId).orElseThrow(() -> new ResourceNotFoundException("Player Not Found"));
+        PlayerModel playerModel = authService.authenticated();
         TeamModel teamModel = teamRepository.findById(teamId).orElseThrow(() -> new ResourceNotFoundException("Team Not Found"));
 
         PlayerTeamPK playerTeamPK = new PlayerTeamPK();
@@ -327,7 +332,7 @@ public class PlayerTeamVacancyService {
 
         htmlBodyMail = htmlBodyMail.replaceAll("_userEmail_", playerModel.getEmail());
         htmlBodyMail = htmlBodyMail.replaceAll("_vacancyName_", vacancyModel.getName());
-        htmlBodyMail = htmlBodyMail.replaceAll("userId", String.valueOf(playerId));
+        htmlBodyMail = htmlBodyMail.replaceAll("userId", String.valueOf(playerModel.getId()));
 
         htmlBodyMail = htmlBodyMail.replaceAll("vacancyId", String.valueOf(vacancyId));
         htmlBodyMail = htmlBodyMail.replaceAll("teamId", String.valueOf(teamId));

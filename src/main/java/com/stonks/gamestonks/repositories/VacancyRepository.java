@@ -1,6 +1,5 @@
 package com.stonks.gamestonks.repositories;
 
-import com.stonks.gamestonks.models.UserModel;
 import com.stonks.gamestonks.models.VacancyModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 

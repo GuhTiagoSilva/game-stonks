@@ -5,11 +5,19 @@ import com.stonks.gamestonks.models.PlayerModel;
 import com.stonks.gamestonks.repositories.PlayerRepository;
 import com.stonks.gamestonks.repositories.UserRepository;
 import com.stonks.gamestonks.services.exceptions.ResourceNotFoundException;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
+import java.util.Optional;
+
 @Service
-public class PlayerService {
+@Log4j2
+public class PlayerService implements UserDetailsService {
 
     private final PlayerRepository playerRepository;
 
@@ -42,4 +50,15 @@ public class PlayerService {
         return new PlayerDto(playerModel);
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        PlayerModel playerModel = playerRepository.findByEmail(username);
+
+        if (Objects.nonNull(playerModel))
+            return playerModel;
+
+        log.error("user not found for e-mail: {}", username);
+        throw new UsernameNotFoundException("User Not Found For Email: " + username);
+    }
 }

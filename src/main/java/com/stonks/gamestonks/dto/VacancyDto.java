@@ -1,7 +1,5 @@
 package com.stonks.gamestonks.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.stonks.gamestonks.enums.VacancyType;
 import com.stonks.gamestonks.models.VacancyModel;

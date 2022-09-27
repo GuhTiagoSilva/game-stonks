@@ -1,6 +1,7 @@
 package com.stonks.gamestonks.controllers;
 
 import com.stonks.gamestonks.dto.TeamDto;
+import com.stonks.gamestonks.repositories.projections.PlayerAppliedVacancyProjection;
 import com.stonks.gamestonks.repositories.projections.TeamGameProjection;
 import com.stonks.gamestonks.repositories.projections.TeamProjection;
 import com.stonks.gamestonks.services.TeamService;
@@ -53,6 +54,14 @@ public class TeamController {
     @GetMapping("/{id}")
     public TeamDto findById(@PathVariable Long id) {
         return teamService.findById(id);
+    }
+
+    @ApiOperation(value = "Obter todos os jogadores que aplicaram para uma vaga de um time")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAnyRole('TEAM')")
+    @GetMapping("/appliedPlayers")
+    public List<PlayerAppliedVacancyProjection> findAllAppliedPlayers() {
+        return teamService.findAllAppliedPlayers();
     }
 
 }

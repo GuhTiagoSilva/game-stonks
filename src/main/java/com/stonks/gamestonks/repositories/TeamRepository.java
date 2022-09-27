@@ -14,6 +14,7 @@ public interface TeamRepository extends JpaRepository<TeamModel, Long> {
 
     @Query(value =
             "select\n" +
+                    "tt.id as teamId, " +
                     "tt.name as teamName,\n" +
                     "tv.name as vacancyName,\n" +
                     "tv.description as vacancyDescription,\n" +
@@ -40,6 +41,7 @@ public interface TeamRepository extends JpaRepository<TeamModel, Long> {
 
 
     @Query(value = "select\n" +
+            "tt.id as teamId, " +
             "tt.name as teamName,\n" +
             "tt.years_of_experience as yearsOfExperience,\n" +
             "tg.name as games\n" +

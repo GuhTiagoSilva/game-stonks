@@ -2,10 +2,13 @@ package com.stonks.gamestonks.services;
 
 import com.stonks.gamestonks.dto.TeamDto;
 import com.stonks.gamestonks.dto.VacancyDto;
+import com.stonks.gamestonks.models.PlayerModel;
 import com.stonks.gamestonks.models.TeamModel;
 import com.stonks.gamestonks.models.VacancyModel;
+import com.stonks.gamestonks.repositories.PlayerRepository;
 import com.stonks.gamestonks.repositories.TeamRepository;
 import com.stonks.gamestonks.repositories.VacancyRepository;
+import com.stonks.gamestonks.repositories.projections.PlayerAppliedVacancyProjection;
 import com.stonks.gamestonks.repositories.projections.TeamGameProjection;
 import com.stonks.gamestonks.repositories.projections.TeamProjection;
 import com.stonks.gamestonks.services.exceptions.ResourceNotFoundException;
@@ -23,9 +26,19 @@ public class TeamService {
 
     private final VacancyRepository vacancyRepository;
 
-    public TeamService(TeamRepository teamRepository, VacancyRepository vacancyRepository) {
+    private final AuthService authService;
+
+    private final PlayerRepository playerRepository;
+
+    public TeamService(TeamRepository teamRepository,
+                       VacancyRepository vacancyRepository,
+                       PlayerRepository playerRepository,
+                       AuthService authService
+    ) {
         this.teamRepository = teamRepository;
         this.vacancyRepository = vacancyRepository;
+        this.playerRepository = playerRepository;
+        this.authService = authService;
     }
 
     @Transactional(readOnly = true)
@@ -57,5 +70,11 @@ public class TeamService {
                         + id));
         VacancyDto vacancyDto = new VacancyDto(vacancyModel);
         return new TeamDto(team, vacancyDto);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PlayerAppliedVacancyProjection> findAllAppliedPlayers() {
+        PlayerModel playerModel = authService.authenticated();
+        return playerRepository.findAllAppliedPlayers(playerModel.getId());
     }
 }

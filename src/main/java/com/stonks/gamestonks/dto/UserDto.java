@@ -1,5 +1,6 @@
 package com.stonks.gamestonks.dto;
 
+import com.stonks.gamestonks.models.UserModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,4 +21,13 @@ public class UserDto implements Serializable {
     private String email;
     private String password;
     private String cpf;
+
+    public UserDto(UserModel user) {
+        this.id = user.getId();
+        this.firstName = user.getFirstName();
+        this.cpf = user.getCpf();
+        this.email = user.getEmail();
+        this.password = user.getPassword();
+        this.lastName = user.getLastName();
+    }
 }

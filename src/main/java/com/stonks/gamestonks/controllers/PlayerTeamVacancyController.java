@@ -17,15 +17,14 @@ public class PlayerTeamVacancyController {
         this.playerTeamVacancyService = playerTeamVacancyService;
     }
 
-    @ApiOperation(value = "Aplica para uma vaga")
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("/{playerId}/vacancies/{vacancyId}/teams/{teamId}")
-    public void applyToVacancy(@RequestBody PlayerTeamVacancyDto playerTeamVacancyDto,
-                               @PathVariable(value = "playerId") Long playerId,
+    @ApiOperation(value = "Aplica para uma vaga e manda um e-mail")
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/{playerId}/vacancies/{vacancyId}/teams/{teamId}")
+    public void applyToVacancy(@PathVariable(value = "playerId") Long playerId,
                                @PathVariable(value = "vacancyId") Long vacancyId,
                                @PathVariable(value = "teamId") Long teamId
     ) {
-        playerTeamVacancyService.applyToVacancy(playerTeamVacancyDto, playerId, vacancyId, teamId);
+        playerTeamVacancyService.applyToVacancy(playerId, vacancyId, teamId);
     }
 
 }

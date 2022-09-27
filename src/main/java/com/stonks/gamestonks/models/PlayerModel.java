@@ -26,14 +26,6 @@ public class PlayerModel extends UserModel implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "game_id"))
     private Set<GameModel> games = new HashSet<>();
 
-    @ManyToOne
-    @JoinColumn(name = "vacancy_id")
-    private VacancyModel vacancy;
-
-    @ManyToOne
-    @JoinColumn(name = "team_id")
-    private TeamModel team;
-
     public PlayerModel(Long playerId) {
         this.setId(playerId);
     }

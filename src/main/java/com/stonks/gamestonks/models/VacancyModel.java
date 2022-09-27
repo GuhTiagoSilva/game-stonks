@@ -33,7 +33,7 @@ public class VacancyModel implements Serializable {
     private LocalDate endDate;
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserModel author;
+    private PlayerModel author;
 
     public VacancyModel(Long vacancyId) {
         id = vacancyId;

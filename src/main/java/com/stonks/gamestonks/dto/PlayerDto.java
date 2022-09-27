@@ -1,5 +1,6 @@
 package com.stonks.gamestonks.dto;
 
+import com.stonks.gamestonks.models.PlayerModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,4 +18,10 @@ public class PlayerDto extends UserDto implements Serializable {
     private long yearsOfExperience;
     private int level;
     private List<GameDto> games = new ArrayList<>();
+
+    public PlayerDto(PlayerModel playerModel) {
+        super(playerModel);
+        this.level = playerModel.getLevel();
+        this.yearsOfExperience = playerModel.getYearsOfExperience();
+    }
 }

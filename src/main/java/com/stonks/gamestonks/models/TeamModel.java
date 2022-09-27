@@ -35,9 +35,6 @@ public class TeamModel implements Serializable {
     @JoinColumn(name = "vacancy_id")
     private VacancyModel vacancy;
 
-    @OneToMany(mappedBy = "team")
-    private List<PlayerModel> players = new ArrayList<>();
-
     public TeamModel(Long teamId) {
         id = teamId;
     }

@@ -1,5 +1,6 @@
 package com.stonks.gamestonks.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.stonks.gamestonks.models.TeamModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,6 +13,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TeamDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -20,11 +22,13 @@ public class TeamDto implements Serializable {
     private String description;
     private Long vacancyId;
 
-    public TeamDto(TeamModel teamModel) {
+    private VacancyDto vacancyDto;
+
+    public TeamDto(TeamModel teamModel, VacancyDto dto) {
         id = teamModel.getId();
         name = teamModel.getName();
         description = teamModel.getDescription();
-        vacancyId = teamModel.getVacancy().getId();
+        vacancyDto = dto;
     }
 
 }

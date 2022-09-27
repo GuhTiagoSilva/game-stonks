@@ -2,11 +2,14 @@ package com.stonks.gamestonks.services;
 
 import com.stonks.gamestonks.dto.TeamDto;
 import com.stonks.gamestonks.dto.TeamRequestSearchDto;
+import com.stonks.gamestonks.dto.VacancyDto;
 import com.stonks.gamestonks.models.TeamModel;
 import com.stonks.gamestonks.models.VacancyModel;
 import com.stonks.gamestonks.repositories.TeamRepository;
+import com.stonks.gamestonks.repositories.VacancyRepository;
 import com.stonks.gamestonks.repositories.projections.TeamGameProjection;
 import com.stonks.gamestonks.repositories.projections.TeamProjection;
+import com.stonks.gamestonks.services.exceptions.ResourceNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,8 +24,11 @@ public class TeamService {
 
     private final TeamRepository teamRepository;
 
-    public TeamService(TeamRepository teamRepository) {
+    private final VacancyRepository vacancyRepository;
+
+    public TeamService(TeamRepository teamRepository, VacancyRepository vacancyRepository) {
         this.teamRepository = teamRepository;
+        this.vacancyRepository = vacancyRepository;
     }
 
     @Transactional(readOnly = true)
@@ -43,6 +49,19 @@ public class TeamService {
     @Transactional(readOnly = true)
     public List<TeamGameProjection> findAllTeams(String gameName, Long yearsOfExperience) {
         return teamRepository.findAllTeams(gameName, yearsOfExperience);
+    }
+
+    @Transactional(readOnly = true)
+    public TeamDto findById(Long id) {
+        TeamModel team = teamRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Entity Not Found: "
+                + id));
+
+        VacancyModel vacancyModel = vacancyRepository.findById(team.getId()).orElseThrow(() ->
+                new ResourceNotFoundException("Entity Not Found: "
+                        + id));
+        VacancyDto vacancyDto = new VacancyDto(vacancyModel);
+        return new TeamDto(team, vacancyDto);
     }
 
 }

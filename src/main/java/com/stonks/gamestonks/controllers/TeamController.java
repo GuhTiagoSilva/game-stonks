@@ -43,4 +43,11 @@ public class TeamController {
         return teamService.findAllTeams(gameName, yearsOfExperience);
     }
 
+    @ApiOperation(value = "Obter time por ID")
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/{id}")
+    public TeamDto findById(@PathVariable Long id) {
+        return teamService.findById(id);
+    }
+
 }

@@ -5,6 +5,7 @@ import com.stonks.gamestonks.services.PlayerService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,7 +23,7 @@ public class PlayerController {
     @PostMapping
     @PreAuthorize("hasAnyRole('TEAM', 'PLAYER')")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createPlayer(@RequestBody PlayerDto playerDto) {
+    public void createPlayer(@Validated @RequestBody PlayerDto playerDto) {
         playerService.createPlayer(playerDto);
     }
 
@@ -32,6 +33,14 @@ public class PlayerController {
     @ResponseStatus(HttpStatus.OK)
     public PlayerDto findById(@PathVariable Long id) {
         return playerService.findById(id);
+    }
+
+    @ApiOperation(value = "Atualizar usuario autenticado")
+    @PutMapping("/update")
+    @PreAuthorize("hasAnyRole('PLAYER')")
+    @ResponseStatus(HttpStatus.OK)
+    public PlayerDto update(@Validated @RequestBody PlayerDto playerDto) {
+        return playerService.update(playerDto);
     }
 
 }

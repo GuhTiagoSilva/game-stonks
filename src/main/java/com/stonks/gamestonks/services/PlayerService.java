@@ -2,8 +2,10 @@ package com.stonks.gamestonks.services;
 
 import com.stonks.gamestonks.dto.PlayerDto;
 import com.stonks.gamestonks.models.PlayerModel;
+import com.stonks.gamestonks.models.UserModel;
 import com.stonks.gamestonks.repositories.PlayerRepository;
 import com.stonks.gamestonks.repositories.UserRepository;
+import com.stonks.gamestonks.repositories.projections.PlayersOpenToWorkProjection;
 import com.stonks.gamestonks.services.exceptions.ResourceNotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -23,9 +26,12 @@ public class PlayerService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    public PlayerService(PlayerRepository playerRepository, UserRepository userRepository) {
+    private final AuthService authService;
+
+    public PlayerService(PlayerRepository playerRepository, UserRepository userRepository, AuthService authService) {
         this.playerRepository = playerRepository;
         this.userRepository = userRepository;
+        this.authService = authService;
     }
 
     @Transactional
@@ -48,6 +54,29 @@ public class PlayerService implements UserDetailsService {
                 .findById(id).orElseThrow(() -> new ResourceNotFoundException("Player not found: " + id));
 
         return new PlayerDto(playerModel);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PlayersOpenToWorkProjection> findAllPlayersOpenToWork(Long yearsOfExperience) {
+        return playerRepository.findAllPlayersOpenToWork(yearsOfExperience);
+    }
+
+    @Transactional
+    public PlayerDto update(PlayerDto playerDto) {
+
+        PlayerModel playerModel = authService.authenticated();
+
+        PlayerModel player = playerRepository
+                .findById(playerModel.getId()).orElseThrow(() -> new ResourceNotFoundException("User Not Found"));
+
+        player.setEmail(playerDto.getEmail());
+        player.setLastName(playerDto.getLastName());
+        player.setFirstName(playerDto.getFirstName());
+        player.setOpenToWork(playerDto.isOpenToWork());
+        player.setCpf(playerDto.getCpf());
+
+        player = playerRepository.save(player);
+        return new PlayerDto(player);
     }
 
     @Override

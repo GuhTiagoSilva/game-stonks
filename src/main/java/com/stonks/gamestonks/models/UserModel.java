@@ -30,4 +30,5 @@ public abstract class UserModel implements Serializable, UserDetails {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private RoleModel role;
+    private boolean isOpenToWork;
 }

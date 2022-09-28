@@ -2,6 +2,7 @@ package com.stonks.gamestonks.repositories;
 
 import com.stonks.gamestonks.models.PlayerModel;
 import com.stonks.gamestonks.repositories.projections.PlayerAppliedVacancyProjection;
+import com.stonks.gamestonks.repositories.projections.PlayersOpenToWorkProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -29,4 +30,11 @@ public interface PlayerRepository extends JpaRepository<PlayerModel, Long> {
             "where tv.user_id = :authUser ;\n",
             nativeQuery = true)
     List<PlayerAppliedVacancyProjection> findAllAppliedPlayers(@Param("authUser") Long authUser);
+
+    @Query(value =
+            "select tu.id, concat(tu.first_name, ' ', tu.last_name) as name, " +
+            "tu.email as email , tp.years_of_experience as yearsOfExperience, tu.cpf as cpf  from tb_players tp\n" +
+            "join tb_users tu on tu.id = tp.id where tu.is_open_to_work = true and (:years is null or years_of_experience >= :years)\n", nativeQuery = true)
+    List<PlayersOpenToWorkProjection> findAllPlayersOpenToWork(@Param("years") Long yearsOfExperience);
+
 }

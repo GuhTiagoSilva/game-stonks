@@ -21,6 +21,7 @@ public class UserDto implements Serializable {
     private String email;
     private String password;
     private String cpf;
+    private Boolean isOpenToWork = Boolean.TRUE;
 
     public UserDto(UserModel user) {
         this.id = user.getId();
@@ -29,5 +30,6 @@ public class UserDto implements Serializable {
         this.email = user.getEmail();
         this.password = user.getPassword();
         this.lastName = user.getLastName();
+        this.isOpenToWork = user.isOpenToWork();
     }
 }

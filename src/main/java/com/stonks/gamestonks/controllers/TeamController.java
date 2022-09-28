@@ -2,8 +2,10 @@ package com.stonks.gamestonks.controllers;
 
 import com.stonks.gamestonks.dto.TeamDto;
 import com.stonks.gamestonks.repositories.projections.PlayerAppliedVacancyProjection;
+import com.stonks.gamestonks.repositories.projections.PlayersOpenToWorkProjection;
 import com.stonks.gamestonks.repositories.projections.TeamGameProjection;
 import com.stonks.gamestonks.repositories.projections.TeamProjection;
+import com.stonks.gamestonks.services.PlayerService;
 import com.stonks.gamestonks.services.TeamService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
@@ -20,8 +22,11 @@ public class TeamController {
 
     private final TeamService teamService;
 
-    public TeamController(TeamService teamService) {
+    private final PlayerService playerService;
+
+    public TeamController(TeamService teamService, PlayerService playerService) {
         this.teamService = teamService;
+        this.playerService = playerService;
     }
 
     @ApiOperation(value = "Criar time")
@@ -62,6 +67,14 @@ public class TeamController {
     @GetMapping("/appliedPlayers")
     public List<PlayerAppliedVacancyProjection> findAllAppliedPlayers() {
         return teamService.findAllAppliedPlayers();
+    }
+
+    @ApiOperation(value = "Encontrar jogadores que estejam procurando por vagas em times")
+    @GetMapping("/playersOpenToWork")
+    @PreAuthorize("hasAnyRole('TEAM')")
+    @ResponseStatus(HttpStatus.OK)
+    public List<PlayersOpenToWorkProjection> findAllPlayersOpenToWork(@RequestParam(required = false) Long yearsOfExperience) {
+        return playerService.findAllPlayersOpenToWork(yearsOfExperience);
     }
 
 }

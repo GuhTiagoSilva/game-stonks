@@ -1,6 +1,5 @@
 package com.stonks.gamestonks.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.stonks.gamestonks.models.TeamModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +12,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TeamDto implements Serializable {
     private static final long serialVersionUID = 1L;
 

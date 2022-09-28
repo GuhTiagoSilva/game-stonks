@@ -32,6 +32,12 @@ public class PlayerService implements UserDetailsService {
         this.authService = authService;
     }
 
+    @Transactional(readOnly = true)
+    public PlayerDto findAuthUserInformation() {
+        PlayerModel playerModel = authService.authenticated();
+        return new PlayerDto(playerModel);
+    }
+
     @Transactional
     public void createPlayer(PlayerDto playerDto) {
         PlayerModel playerModel = new PlayerModel();

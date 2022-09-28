@@ -23,6 +23,8 @@ public class UserDto implements Serializable {
     private String cpf;
     private Boolean isOpenToWork = Boolean.TRUE;
 
+    private RoleDto roleDto;
+
     public UserDto(UserModel user) {
         this.id = user.getId();
         this.firstName = user.getFirstName();
@@ -31,5 +33,6 @@ public class UserDto implements Serializable {
         this.password = user.getPassword();
         this.lastName = user.getLastName();
         this.isOpenToWork = user.isOpenToWork();
+        this.roleDto = new RoleDto(user.getRole());
     }
 }

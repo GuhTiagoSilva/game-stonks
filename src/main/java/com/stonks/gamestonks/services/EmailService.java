@@ -40,4 +40,24 @@ public class EmailService {
             return "Error while sending mail!!!";
         }
     }
+
+    public String sendMail(EmailDetailsDto details, String sender) {
+
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper;
+
+        try {
+            mimeMessageHelper = new MimeMessageHelper(mimeMessage, false);
+            mimeMessageHelper.setFrom(sender);
+            mimeMessageHelper.setTo(details.getRecipient());
+            mimeMessageHelper.setText(details.getMsgBody(), true);
+            mimeMessageHelper.setSubject(details.getSubject());
+
+            javaMailSender.send(mimeMessage);
+            return "Mail sent Successfully";
+
+        } catch (MessagingException e) {
+            return "Error while sending mail!!!";
+        }
+    }
 }

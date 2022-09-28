@@ -1,5 +1,7 @@
 package com.stonks.gamestonks.controllers;
 
+import com.stonks.gamestonks.dto.InvitePlayerDto;
+import com.stonks.gamestonks.dto.MessageDto;
 import com.stonks.gamestonks.dto.TeamDto;
 import com.stonks.gamestonks.repositories.projections.PlayerAppliedVacancyProjection;
 import com.stonks.gamestonks.repositories.projections.PlayersOpenToWorkProjection;
@@ -74,6 +76,13 @@ public class TeamController {
     @ResponseStatus(HttpStatus.OK)
     public List<PlayersOpenToWorkProjection> findAllPlayersOpenToWork(@RequestParam(required = false) Long yearsOfExperience) {
         return playerService.findAllPlayersOpenToWork(yearsOfExperience);
+    }
+
+    @ApiOperation(value = "Convidar jogador para se juntar ao time")
+    @PostMapping("/invitePlayer")
+    @ResponseStatus(HttpStatus.OK)
+    public void invitePlayerToJoinTheTeam(@PathVariable Long playerId) {
+        teamService.inviteTeamToJoinTheTeam(playerId);
     }
 
 }

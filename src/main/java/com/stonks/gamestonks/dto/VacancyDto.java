@@ -1,6 +1,5 @@
 package com.stonks.gamestonks.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.stonks.gamestonks.enums.VacancyType;
 import com.stonks.gamestonks.models.VacancyModel;
 import lombok.AllArgsConstructor;
@@ -15,7 +14,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class VacancyDto implements Serializable {
     private static final long serialVersionUID = 1L;
 

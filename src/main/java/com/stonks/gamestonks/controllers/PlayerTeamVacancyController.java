@@ -19,11 +19,13 @@ public class PlayerTeamVacancyController {
     @ApiOperation(value = "Aplica para uma vaga e manda um e-mail")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyRole('PLAYER')")
-    @GetMapping("/{vacancyId}/teams/{teamId}")
-    public void applyToVacancy(@PathVariable(value = "vacancyId") Long vacancyId,
-                               @PathVariable(value = "teamId") Long teamId
+    @GetMapping("/{vacancyId}/teams/{teamId}/games/{gameId}")
+    public void applyToVacancy(
+            @PathVariable(value = "gameId") Long gameId,
+            @PathVariable(value = "vacancyId") Long vacancyId,
+            @PathVariable(value = "teamId") Long teamId
     ) {
-        playerTeamVacancyService.applyToVacancy(vacancyId, teamId);
+        playerTeamVacancyService.applyToVacancy(vacancyId, teamId, gameId);
     }
 
 }

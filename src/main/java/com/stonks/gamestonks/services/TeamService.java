@@ -1,7 +1,6 @@
 package com.stonks.gamestonks.services;
 
-import com.stonks.gamestonks.dto.TeamDto;
-import com.stonks.gamestonks.dto.VacancyDto;
+import com.stonks.gamestonks.dto.*;
 import com.stonks.gamestonks.models.PlayerModel;
 import com.stonks.gamestonks.models.TeamModel;
 import com.stonks.gamestonks.models.VacancyModel;
@@ -12,6 +11,7 @@ import com.stonks.gamestonks.repositories.projections.PlayerAppliedVacancyProjec
 import com.stonks.gamestonks.repositories.projections.TeamGameProjection;
 import com.stonks.gamestonks.repositories.projections.TeamProjection;
 import com.stonks.gamestonks.services.exceptions.ResourceNotFoundException;
+import com.stonks.gamestonks.utils.MailMessageUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,15 +29,21 @@ public class TeamService {
 
     private final PlayerRepository playerRepository;
 
+    private final EmailService emailService;
+
+    private static String htmlBodyMail = MailMessageUtils.getInvitePlayerHtmlMailBody();
+
     public TeamService(TeamRepository teamRepository,
                        VacancyRepository vacancyRepository,
                        PlayerRepository playerRepository,
-                       AuthService authService
+                       AuthService authService,
+                       EmailService emailService
     ) {
         this.teamRepository = teamRepository;
         this.vacancyRepository = vacancyRepository;
         this.playerRepository = playerRepository;
         this.authService = authService;
+        this.emailService = emailService;
     }
 
     @Transactional(readOnly = true)
@@ -76,4 +82,29 @@ public class TeamService {
         PlayerModel playerModel = authService.authenticated();
         return playerRepository.findAllAppliedPlayers(playerModel.getId());
     }
+
+    @Transactional
+    public void inviteTeamToJoinTheTeam(Long playerId) {
+
+        PlayerModel userAuthenticated = authService.authenticated();
+
+        PlayerModel playerModel = playerRepository.findById(playerId).orElseThrow(() -> new ResourceNotFoundException("Player not found"));
+
+        MessageDto messageDto = MessageDto
+                .builder()
+                .senderName(userAuthenticated.getFirstName() + " " + userAuthenticated.getLastName())
+                .receiverName(playerModel.getEmail())
+                .message("Message")
+                .build();
+
+        htmlBodyMail = htmlBodyMail.replaceAll("_userEmail_", playerModel.getFirstName() + " " + playerModel.getLastName());
+        EmailDetailsDto emailDetailsDto = EmailDetailsDto.builder()
+                .msgBody(htmlBodyMail)
+                .recipient(playerModel.getEmail())
+                .subject(userAuthenticated.getFirstName() + " " + userAuthenticated.getLastName() + " gostaria de conversar com você !!!")
+                .build();
+
+        emailService.sendMail(emailDetailsDto, messageDto.getSenderName());
+    }
+
 }

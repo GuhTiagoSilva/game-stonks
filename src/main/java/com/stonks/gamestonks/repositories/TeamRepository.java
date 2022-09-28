@@ -21,6 +21,7 @@ public interface TeamRepository extends JpaRepository<TeamModel, Long> {
                     "tv.start_date as vacancyStartDate,\n" +
                     "tv.end_date as vacancyEndDate,\n" +
                     "tt.years_of_experience,\n" +
+                    "tg.id as gameId, " +
                     "tg.name as games\n" +
                     "from tb_teams tt\n" +
                     "inner join tb_vacancies tv\n" +
@@ -44,6 +45,7 @@ public interface TeamRepository extends JpaRepository<TeamModel, Long> {
             "tt.id as teamId, " +
             "tt.name as teamName,\n" +
             "tt.years_of_experience as yearsOfExperience,\n" +
+            "tg.id as gameId, " +
             "tg.name as games\n" +
             "from tb_teams tt\n" +
             "inner join tb_teams_games ttg\n" +

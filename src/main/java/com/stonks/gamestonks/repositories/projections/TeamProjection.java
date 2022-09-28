@@ -9,6 +9,7 @@ public interface TeamProjection {
     String getVacancyDescription();
     LocalDate getVacancyStartDate();
     LocalDate getVacancyEndDate();
+    Long getGameId();
     String getGames();
 
 }

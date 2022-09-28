@@ -20,10 +20,13 @@ public class PlayerDto extends UserDto implements Serializable {
     private List<GameDto> games = new ArrayList<>();
     private boolean isOpenToWork;
 
+    private RoleDto roleDto;
+
     public PlayerDto(PlayerModel playerModel) {
         super(playerModel);
         this.level = playerModel.getLevel();
         this.yearsOfExperience = playerModel.getYearsOfExperience();
         this.isOpenToWork = playerModel.isOpenToWork();
+        this.roleDto = new RoleDto(playerModel.getRole());
     }
 }

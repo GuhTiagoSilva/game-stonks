@@ -5,9 +5,8 @@ import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
+@Data
+@Builder
 public class MessageDto {
     private String senderName;
     private String receiverName;

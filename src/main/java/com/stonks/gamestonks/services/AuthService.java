@@ -1,7 +1,6 @@
 package com.stonks.gamestonks.services;
 
 import com.stonks.gamestonks.models.PlayerModel;
-import com.stonks.gamestonks.models.UserModel;
 import com.stonks.gamestonks.repositories.PlayerRepository;
 import com.stonks.gamestonks.services.exceptions.UnauthorizedException;
 import org.springframework.security.core.context.SecurityContextHolder;

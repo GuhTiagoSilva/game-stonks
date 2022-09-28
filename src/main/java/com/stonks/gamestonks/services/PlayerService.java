@@ -2,7 +2,6 @@ package com.stonks.gamestonks.services;
 
 import com.stonks.gamestonks.dto.PlayerDto;
 import com.stonks.gamestonks.models.PlayerModel;
-import com.stonks.gamestonks.models.UserModel;
 import com.stonks.gamestonks.repositories.PlayerRepository;
 import com.stonks.gamestonks.repositories.UserRepository;
 import com.stonks.gamestonks.repositories.projections.PlayersOpenToWorkProjection;
@@ -16,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @Log4j2

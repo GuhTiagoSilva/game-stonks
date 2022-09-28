@@ -12,7 +12,6 @@ import com.stonks.gamestonks.repositories.projections.PlayerAppliedVacancyProjec
 import com.stonks.gamestonks.repositories.projections.TeamGameProjection;
 import com.stonks.gamestonks.repositories.projections.TeamProjection;
 import com.stonks.gamestonks.services.exceptions.ResourceNotFoundException;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

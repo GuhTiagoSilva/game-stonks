@@ -43,7 +43,7 @@ public class PlayerController {
     }
 
     @ApiOperation(value = "Recuperar usuario autenticado")
-    @PutMapping("/findAuthUserInformation")
+    @GetMapping("/findAuthUserInformation")
     @PreAuthorize("hasAnyRole('PLAYER', 'TEAM')")
     @ResponseStatus(HttpStatus.OK)
     public PlayerDto findLoggedUser() {

@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RoleDto {
+
+    private Long id;
     private String authority;
 
     public RoleDto(RoleModel role) {

@@ -2,7 +2,9 @@ package com.stonks.gamestonks.services;
 
 import com.stonks.gamestonks.dto.PlayerDto;
 import com.stonks.gamestonks.models.PlayerModel;
+import com.stonks.gamestonks.models.RoleModel;
 import com.stonks.gamestonks.repositories.PlayerRepository;
+import com.stonks.gamestonks.repositories.RoleRepository;
 import com.stonks.gamestonks.repositories.UserRepository;
 import com.stonks.gamestonks.repositories.projections.PlayersOpenToWorkProjection;
 import com.stonks.gamestonks.services.exceptions.ResourceNotFoundException;
@@ -22,14 +24,17 @@ public class PlayerService implements UserDetailsService {
 
     private final PlayerRepository playerRepository;
 
+    private final RoleRepository roleRepository;
+
     private final UserRepository userRepository;
 
     private final AuthService authService;
 
-    public PlayerService(PlayerRepository playerRepository, UserRepository userRepository, AuthService authService) {
+    public PlayerService(PlayerRepository playerRepository, UserRepository userRepository, AuthService authService, RoleRepository repository) {
         this.playerRepository = playerRepository;
         this.userRepository = userRepository;
         this.authService = authService;
+        this.roleRepository = repository;
     }
 
     @Transactional(readOnly = true)
@@ -41,6 +46,7 @@ public class PlayerService implements UserDetailsService {
     @Transactional
     public void createPlayer(PlayerDto playerDto) {
         PlayerModel playerModel = new PlayerModel();
+        RoleModel roleModel = roleRepository.findById(playerDto.getRoleDto().getId()).orElseThrow(() -> new ResourceNotFoundException("Role not found"));
         playerModel.setYearsOfExperience(playerDto.getYearsOfExperience());
         playerModel.setLevel(playerDto.getLevel());
         playerModel.setEmail(playerDto.getEmail());
@@ -48,6 +54,7 @@ public class PlayerService implements UserDetailsService {
         playerModel.setLastName(playerDto.getLastName());
         playerModel.setPassword(playerDto.getPassword());
         playerModel.setCpf(playerDto.getCpf());
+        playerModel.setRole(roleModel);
         playerRepository.save(playerModel);
     }
 

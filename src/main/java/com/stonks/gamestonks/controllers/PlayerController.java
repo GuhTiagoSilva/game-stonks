@@ -19,8 +19,7 @@ public class PlayerController {
     }
 
     @ApiOperation(value = "Criar jogador")
-    @PostMapping
-    @PreAuthorize("hasAnyRole('TEAM', 'PLAYER')")
+    @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public void createPlayer(@Validated @RequestBody PlayerDto playerDto) {
         playerService.createPlayer(playerDto);

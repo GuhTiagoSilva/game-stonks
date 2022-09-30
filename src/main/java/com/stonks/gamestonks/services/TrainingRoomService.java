@@ -8,10 +8,12 @@ import com.stonks.gamestonks.models.TrainingRoomModel;
 import com.stonks.gamestonks.repositories.GameRepository;
 import com.stonks.gamestonks.repositories.TrainingRepository;
 import com.stonks.gamestonks.repositories.TrainingRoomRepository;
+import com.stonks.gamestonks.repositories.projections.TrainingRoomProjection;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -22,6 +24,7 @@ public class TrainingRoomService {
     private final TrainingRepository trainingRepository;
 
     private final AuthService authService;
+
 
     public TrainingRoomService(TrainingRoomRepository trainingRoomRepository,
                                GameRepository gameRepository,
@@ -68,5 +71,8 @@ public class TrainingRoomService {
 
     }
 
-
+    @Transactional(readOnly = true)
+    public List<TrainingRoomProjection> findAllTrainingRoom() {
+        return trainingRoomRepository.findTrainingRoom();
+    }
 }

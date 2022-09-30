@@ -27,6 +27,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     private static final String[] PUBLIC = {
             "/oauth/token",
+            "/players/create",
             "/h2-console/**",
             "/v2/api-docs",
             "/configuration/ui",

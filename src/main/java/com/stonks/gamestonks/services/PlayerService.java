@@ -12,6 +12,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,17 +25,20 @@ public class PlayerService implements UserDetailsService {
 
     private final PlayerRepository playerRepository;
 
+    private final BCryptPasswordEncoder passwordEncoder;
+
     private final RoleRepository roleRepository;
 
     private final UserRepository userRepository;
 
     private final AuthService authService;
 
-    public PlayerService(PlayerRepository playerRepository, UserRepository userRepository, AuthService authService, RoleRepository repository) {
+    public PlayerService(PlayerRepository playerRepository, UserRepository userRepository, AuthService authService, RoleRepository repository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.playerRepository = playerRepository;
         this.userRepository = userRepository;
         this.authService = authService;
         this.roleRepository = repository;
+        this.passwordEncoder = bCryptPasswordEncoder;
     }
 
     @Transactional(readOnly = true)
@@ -52,7 +56,7 @@ public class PlayerService implements UserDetailsService {
         playerModel.setEmail(playerDto.getEmail());
         playerModel.setFirstName(playerDto.getFirstName());
         playerModel.setLastName(playerDto.getLastName());
-        playerModel.setPassword(playerDto.getPassword());
+        playerModel.setPassword(passwordEncoder.encode(playerDto.getPassword()));
         playerModel.setCpf(playerDto.getCpf());
         playerModel.setRole(roleModel);
         playerRepository.save(playerModel);

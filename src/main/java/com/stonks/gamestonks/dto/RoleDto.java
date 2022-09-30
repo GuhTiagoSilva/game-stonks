@@ -16,6 +16,7 @@ public class RoleDto {
     private String authority;
 
     public RoleDto(RoleModel role) {
+        this.id = role.getId();
         this.authority = role.getAuthority();
     }
 }

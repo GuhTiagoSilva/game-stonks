@@ -9,6 +9,7 @@ import com.stonks.gamestonks.repositories.GameRepository;
 import com.stonks.gamestonks.repositories.TrainingRepository;
 import com.stonks.gamestonks.repositories.TrainingRoomRepository;
 import com.stonks.gamestonks.repositories.projections.TrainingRoomProjection;
+import com.stonks.gamestonks.services.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,6 +70,12 @@ public class TrainingRoomService {
         trainingModel.setGames(games);
         trainingRepository.save(trainingModel);
 
+    }
+
+    @Transactional(readOnly = true)
+    public TrainingRoomProjection findById(Long id) {
+        TrainingRoomProjection trainingRoomModel = trainingRoomRepository.findTrainingRoomById(id).orElseThrow(() -> new ResourceNotFoundException("Training Room Not Found"));
+        return trainingRoomModel;
     }
 
     @Transactional(readOnly = true)

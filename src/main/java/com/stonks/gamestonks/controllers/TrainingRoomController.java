@@ -29,6 +29,21 @@ public class TrainingRoomController {
         trainingRoomService.createTrainingRoom(trainingRoomDto);
     }
 
+    @ApiOperation("Pedir solicitação para sala de treinamento")
+    @PostMapping(value = "/{trainingRoomId}/request")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void requestParticipationInTrainingRoom(@PathVariable Long trainingRoomId) {
+
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation("Encontrar sala de treinamento por ID")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAnyRole('TEAM', 'PLAYER')")
+    public TrainingRoomProjection findTrainingRoomById(@PathVariable Long id) {
+        return trainingRoomService.findById(id);
+    }
+
     @ApiOperation("Obter todas as salas de treinamento disponiveis")
     @PreAuthorize("hasAnyRole('TEAM', 'PLAYER')")
     @GetMapping

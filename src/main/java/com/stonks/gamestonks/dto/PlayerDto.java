@@ -18,6 +18,9 @@ public class PlayerDto extends UserDto implements Serializable {
     private long yearsOfExperience;
     private int level;
     private boolean isOpenToWork;
+
+    private String playerDescription;
+
     private RoleDto roleDto;
 
     private List<GameDto> games= new ArrayList<>();
@@ -28,6 +31,7 @@ public class PlayerDto extends UserDto implements Serializable {
         this.yearsOfExperience = playerModel.getYearsOfExperience();
         this.roleDto = new RoleDto(playerModel.getRole());
         this.isOpenToWork = playerModel.isOpenToWork();
+        this.playerDescription = playerModel.getPlayerDescription();
         playerModel.getGames().forEach(game -> this.games.add(new GameDto(game)));
     }
 }

@@ -1,5 +1,6 @@
 package com.stonks.gamestonks.models;
 
+import com.stonks.gamestonks.dto.GameDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -29,4 +30,9 @@ public class GameModel implements Serializable {
     private Set<TeamModel> teams = new HashSet<>();
     @ManyToMany(mappedBy = "games")
     private Set<TrainingModel> trainings = new HashSet<>();
+
+    public GameModel(GameDto gameDto) {
+        this.id = gameDto.getId();
+        this.name = gameDto.getName();
+    }
 }

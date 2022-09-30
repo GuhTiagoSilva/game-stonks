@@ -20,6 +20,8 @@ public class PlayerModel extends UserModel implements Serializable {
 
     private long yearsOfExperience;
     private int level;
+    @Column(columnDefinition = "TEXT")
+    private String playerDescription;
     @ManyToOne
     @JoinColumn(name = "team_id")
     private TeamModel team;

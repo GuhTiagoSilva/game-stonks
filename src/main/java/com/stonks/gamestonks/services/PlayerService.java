@@ -1,6 +1,7 @@
 package com.stonks.gamestonks.services;
 
 import com.stonks.gamestonks.dto.PlayerDto;
+import com.stonks.gamestonks.models.GameModel;
 import com.stonks.gamestonks.models.PlayerModel;
 import com.stonks.gamestonks.models.RoleModel;
 import com.stonks.gamestonks.repositories.PlayerRepository;
@@ -59,6 +60,7 @@ public class PlayerService implements UserDetailsService {
         playerModel.setPassword(passwordEncoder.encode(playerDto.getPassword()));
         playerModel.setCpf(playerDto.getCpf());
         playerModel.setRole(roleModel);
+        playerModel.setPlayerDescription(playerDto.getPlayerDescription());
         playerRepository.save(playerModel);
     }
 
@@ -89,6 +91,14 @@ public class PlayerService implements UserDetailsService {
         player.setFirstName(playerDto.getFirstName());
         player.setOpenToWork(playerDto.isOpenToWork());
         player.setCpf(playerDto.getCpf());
+        player.setPlayerDescription(playerDto.getPlayerDescription());
+
+        if (player.getGames() != null) {
+            PlayerModel finalPlayer = player;
+            playerDto.getGames().forEach(gameDto -> {
+                finalPlayer.getGames().add(new GameModel(gameDto));
+            });
+        }
 
         player = playerRepository.save(player);
         return new PlayerDto(player);

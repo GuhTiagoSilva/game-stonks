@@ -32,4 +32,9 @@ public class TeamModel implements Serializable {
     @ManyToOne
     @JoinColumn(name = "vacancy_id")
     private VacancyModel vacancy;
+    @ManyToMany(mappedBy = "teams")
+    private Set<TrainingRoomModel> trainingRoomModels = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private PlayerModel author;
 }

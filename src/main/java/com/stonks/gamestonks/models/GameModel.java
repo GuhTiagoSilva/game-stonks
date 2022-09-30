@@ -25,4 +25,6 @@ public class GameModel implements Serializable {
     @ManyToMany(mappedBy = "games")
     @Setter(AccessLevel.NONE)
     private Set<TeamModel> teams = new HashSet<>();
+    @ManyToMany(mappedBy = "games")
+    private Set<TrainingModel> trainings = new HashSet<>();
 }

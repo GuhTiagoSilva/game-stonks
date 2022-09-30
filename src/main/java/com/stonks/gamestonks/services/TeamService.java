@@ -53,10 +53,12 @@ public class TeamService {
     }
     @Transactional
     public void createTeam(TeamDto teamDto) {
+        PlayerModel playerModel = authService.authenticated();
         TeamModel teamModel = new TeamModel();
         teamModel.setDescription(teamDto.getDescription());
         teamModel.setName(teamDto.getName());
         teamModel.setVacancy(new VacancyModel(teamDto.getVacancyId()));
+        teamModel.setAuthor(playerModel);
         teamRepository.save(teamModel);
     }
 

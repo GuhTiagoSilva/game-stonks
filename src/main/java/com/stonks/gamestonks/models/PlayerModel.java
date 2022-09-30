@@ -20,14 +20,15 @@ public class PlayerModel extends UserModel implements Serializable {
 
     private long yearsOfExperience;
     private int level;
-
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private TeamModel team;
     @ManyToMany
     @JoinTable(
             name = "TB_PLAYER_GAMES",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "game_id"))
     private Set<GameModel> games = new HashSet<>();
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> simpleGrantedAuthorityList = new ArrayList<>();

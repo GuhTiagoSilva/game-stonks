@@ -91,6 +91,8 @@ public class PlayerService implements UserDetailsService {
         player.setFirstName(playerDto.getFirstName());
         player.setOpenToWork(playerDto.isOpenToWork());
         player.setCpf(playerDto.getCpf());
+        player.setYearsOfExperience(playerDto.getYearsOfExperience());
+        player.setLevel(playerDto.getLevel());
         player.setPlayerDescription(playerDto.getPlayerDescription());
 
         if (player.getGames() != null) {

@@ -12,6 +12,7 @@ import com.stonks.gamestonks.repositories.projections.TeamGameProjection;
 import com.stonks.gamestonks.repositories.projections.TeamProjection;
 import com.stonks.gamestonks.services.exceptions.ResourceNotFoundException;
 import com.stonks.gamestonks.utils.MailMessageUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,9 @@ import java.util.List;
 
 @Service
 public class TeamService {
+
+    @Value("${spring.mail.username}")
+    private String sender;
 
     private final TeamRepository teamRepository;
 
@@ -49,8 +53,9 @@ public class TeamService {
     @Transactional(readOnly = true)
     public List<TeamProjection> findAllTeamsWithAvailableVacancies(String gameName, Long yearsOfExperience, LocalDate startDate) {
         List<TeamProjection> teamProjections = teamRepository.findOpenVacanciesForTeams(gameName, startDate, yearsOfExperience);
-        return  teamProjections;
+        return teamProjections;
     }
+
     @Transactional
     public void createTeam(TeamDto teamDto) {
         PlayerModel playerModel = authService.authenticated();
@@ -66,11 +71,12 @@ public class TeamService {
     public List<TeamGameProjection> findAllTeams(String gameName, Long yearsOfExperience) {
         return teamRepository.findAllTeams(gameName, yearsOfExperience);
     }
+
     @Transactional(readOnly = true)
     public TeamDto findById(Long id) {
         TeamModel team = teamRepository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException("Entity Not Found: "
-                + id));
+                        + id));
 
         VacancyModel vacancyModel = vacancyRepository.findById(team.getId()).orElseThrow(() ->
                 new ResourceNotFoundException("Entity Not Found: "
@@ -92,21 +98,15 @@ public class TeamService {
 
         PlayerModel playerModel = playerRepository.findById(playerId).orElseThrow(() -> new ResourceNotFoundException("Player not found"));
 
-        MessageDto messageDto = MessageDto
-                .builder()
-                .senderName(userAuthenticated.getFirstName() + " " + userAuthenticated.getLastName())
-                .receiverName(playerModel.getEmail())
-                .message("Message")
-                .build();
-
         htmlBodyMail = htmlBodyMail.replaceAll("_userEmail_", playerModel.getFirstName() + " " + playerModel.getLastName());
+        htmlBodyMail = htmlBodyMail.replaceAll("_userName_", userAuthenticated.getFirstName() + " " + userAuthenticated.getLastName());
         EmailDetailsDto emailDetailsDto = EmailDetailsDto.builder()
                 .msgBody(htmlBodyMail)
                 .recipient(playerModel.getEmail())
-                .subject(userAuthenticated.getFirstName() + " " + userAuthenticated.getLastName() + " gostaria de conversar com você !!!")
+                .subject(userAuthenticated.getFirstName() + " " + userAuthenticated.getLastName() + " (" + userAuthenticated.getEmail() + ") " +" gostaria de conversar com você !!!")
                 .build();
 
-        emailService.sendMail(emailDetailsDto, messageDto.getSenderName());
+        emailService.sendMail(emailDetailsDto, userAuthenticated.getEmail());
     }
 
 }

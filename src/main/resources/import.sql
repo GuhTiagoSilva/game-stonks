@@ -31,7 +31,7 @@ insert into TB_ROLES(authority) values ('ROLE_TEAM');
 insert into tb_users (role_id, first_name, last_name, email, password, cpf, is_open_to_work) values (1, 'Gustavo', 'Silva', 'gustavo.filho.gts@gmail.com', '$2a$12$PWugiEfMzTk71bKDL6AdXOaEEXNSrfiP6FdODa6G.NX75Khgyu7Ue', '523.132.298-62', true);
 insert into tb_players (level, years_of_experience, id) values (1, 5, 1);
 
-insert into tb_users (role_id, first_name, last_name, email, password, cpf, is_open_to_work) values (2, 'Gustavo', 'Silva', 'gustavo.tiago.gts@gmail.com', '$2a$12$PWugiEfMzTk71bKDL6AdXOaEEXNSrfiP6FdODa6G.NX75Khgyu7Ue', '623.132.298-62', true);
+insert into tb_users (role_id, first_name, last_name, email, password, cpf, is_open_to_work) values (2, 'Gustavo', 'Tiago', 'gustavo.tiago.gts@gmail.com', '$2a$12$PWugiEfMzTk71bKDL6AdXOaEEXNSrfiP6FdODa6G.NX75Khgyu7Ue', '623.132.298-62', true);
 insert into tb_players (level, years_of_experience, id) values (2, 5, 2);
 
 insert into tb_users (role_id, first_name, last_name, email, password, cpf, is_open_to_work) values (1, 'Mateus', 'Zucheli', 'mateuszucheli@hotmail.com', '$2a$12$PWugiEfMzTk71bKDL6AdXOaEEXNSrfiP6FdODa6G.NX75Khgyu7Ue', '723.132.298-62', true);

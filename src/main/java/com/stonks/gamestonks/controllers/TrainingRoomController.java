@@ -30,9 +30,9 @@ public class TrainingRoomController {
     }
 
     @ApiOperation("Pedir solicitação para sala de treinamento")
-    @PostMapping(value = "/{trainingRoomId}/request")
+    @GetMapping(value = "/{trainingRoomId}/request")
     @PreAuthorize("hasAnyRole('TEAM', 'PLAYER')")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void requestParticipationInTrainingRoom(@PathVariable Long trainingRoomId) {
         trainingRoomService.requestParticipationInTrainingRoom(trainingRoomId);
     }

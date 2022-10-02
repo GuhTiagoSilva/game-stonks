@@ -34,6 +34,7 @@ public interface TrainingRoomRepository extends JpaRepository<TrainingRoomModel,
     List<TrainingRoomProjection> findTrainingRoom();
 
     @Query(value = "select\n" +
+            "ttr.id as id, " +
             "ttr.name as trainingRoomName,\n" +
             "ttr.description as trainingRoomDescription,\n" +
             "concat (tu.first_name , ' ', tu.last_name) as responsible,\n" +

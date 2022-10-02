@@ -79,9 +79,9 @@ public class TeamController {
     }
 
     @ApiOperation(value = "Convidar jogador para se juntar ao time")
-    @PostMapping("/invitePlayer/{playerId}")
+    @GetMapping("/invitePlayer/{playerId}")
     @PreAuthorize("hasAnyRole('TEAM', 'PLAYER')")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void invitePlayerToJoinTheTeam(@PathVariable(value = "playerId") Long playerId) {
         teamService.inviteTeamToJoinTheTeam(playerId);
     }

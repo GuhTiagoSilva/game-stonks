@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public interface TrainingRoomProjection {
 
+    Long getId();
     String getTrainingRoomName();
     String getTrainingRoomDescription();
     String getResponsible();

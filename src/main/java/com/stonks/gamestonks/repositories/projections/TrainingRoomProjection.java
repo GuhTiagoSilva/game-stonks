@@ -8,6 +8,7 @@ public interface TrainingRoomProjection {
     String getTrainingRoomName();
     String getTrainingRoomDescription();
     String getResponsible();
+    Long getGameId();
     String getGame();
     LocalDateTime getStartDate();
     LocalDateTime getEndDate();

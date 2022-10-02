@@ -79,8 +79,8 @@ public class TrainingRoomService {
     }
 
     @Transactional(readOnly = true)
-    public TrainingRoomProjection findById(Long id) {
-        TrainingRoomProjection trainingRoomModel = trainingRoomRepository.findTrainingRoomById(id).orElseThrow(() -> new ResourceNotFoundException("Training Room Not Found"));
+    public TrainingRoomProjection findById(Long id, Long gameId) {
+        TrainingRoomProjection trainingRoomModel = trainingRoomRepository.findTrainingRoomById(id, gameId).orElseThrow(() -> new ResourceNotFoundException("Training Room Not Found"));
         return trainingRoomModel;
     }
 

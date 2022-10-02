@@ -25,6 +25,7 @@ public class TrainingModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
+    @Column(columnDefinition = "TEXT")
     private String description;
     @ElementCollection(targetClass = WeekDays.class)
     @JoinTable(name = "tb_week_days", joinColumns = @JoinColumn(name = "training_id"))

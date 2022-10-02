@@ -37,12 +37,12 @@ public class TrainingRoomController {
         trainingRoomService.requestParticipationInTrainingRoom(trainingRoomId);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/games/{gameId}")
     @ApiOperation("Encontrar sala de treinamento por ID")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyRole('TEAM', 'PLAYER')")
-    public TrainingRoomProjection findTrainingRoomById(@PathVariable Long id) {
-        return trainingRoomService.findById(id);
+    public TrainingRoomProjection findTrainingRoomById(@PathVariable(value = "id") Long id, @PathVariable(value = "gameId") Long gameId) {
+        return trainingRoomService.findById(id, gameId);
     }
 
     @ApiOperation("Obter todas as salas de treinamento disponiveis")
